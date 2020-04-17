@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<title>{% block title %}我是模板标题{% endblock %}</title>
+{#{% with messages = get_flashed_messages() %}#}
+{#    {% if messages %}#}
+{#        <ul class=flashes>#}
+{#        {% for message in messages %}#}
+{#            <li>{{ message }}</li>#}
+{#        {% endfor %}#}
+{#        </ul>#}
+{#    {% endif %}#}
+{#{% endwith %}#}
+<body>
+{% if user %}
+    欢迎，{{ user.username }}，<a href="{{ url_for('index') }}">返回主页</a>
+    {% if user.is_staff %}
+        <a href="{{ url_for('admin') }}">管理员界面</a>
+    {% endif %}
+{% else %}
+    请先注册
+{% endif %}
+{% block body %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}管理员系统{% endblock %}
+{% block body %}
+    <h1>管理员系统</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>用户名</td><td>占用核数</td><td>占用内存</td><td>开始时间</td><td>结束时间</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td>{{ message.author.username }}</td>
+                    <td>{{ message.kernel_use }}</td>
+                    <td>{{ message.memory_use }}M</td>
+                    <td>{{ message.time_begin }}</td>
+                    <td>{{ message.time_end }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

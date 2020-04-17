@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}需求列表{% endblock %}
+{% block body %}
+    <h1>服务器资源需求列表</h1>
+    <form method="post" action="{{ url_for('message') }}">
+    <table>
+        <thead>
+            <tr>
+                <td>预计占用核数</td>
+                <td>预计占用内存</td>
+                <td>开始时间</td>
+                <td>预计结束时间</td>
+                <td>备注</td>
+                <td>结束</td>
+                <td>取消</td>
+            </tr>
+        </thead>
+        {% for message in user.messages %}
+            <tr>
+                <td>{{ message.kernel_use }}核</td>
+                <td>{{ message.memory_use }}M</td>
+                <td>{{ message.time_begin }}</td>
+                <td>{{ message.time_end }}</td>
+                <td>{{ message.comment }}</td>
+                <td>
+                    {% if message.time_end.now() <= message.time_end %}
+                    <a href="{{ url_for('message_stop', message_id=message.id) }}">结束</a>
+                    {% endif %}
+                </td>
+                <td><a href="{{ url_for('message_cancel', message_id=message.id) }}">取消</a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td><input type="text" name="kernel_use" value="{{ form.kernel_use.data|default(1, boolean=True) }}"></td>
+            <td><input type="text" name="memory_use" value="{{ form.memory_use.data|default(0, boolean=True) }}">M</td>
+            <td><input type="datetime" name="time_begin" value="{{ form.time_begin.data|default(datetime_now, boolean=True) }}"></td>
+            <td><input type="datetime" name="time_end" value="{{ form.time_end.data|default(datetime_now, boolean=True) }}"></td>
+            <td><input type="text" name="comment" value="{{ form.comment.data|default('', boolean=True) }}"></td>
+            <td><input type="submit" value="提交"> </td>
+        </tr>
+        <tr>
+            <td>{% for error in form.kernel_use.errors %}{{ error }}{% endfor %}</td>
+            <td>{% for error in form.memory_use.errors %}{{ error }}{% endfor %}</td>
+            <td>{% for error in form.time_begin.errors %}{{ error }}{% endfor %}</td>
+            <td>{% for error in form.time_end.errors %}{{ error }}{% endfor %}</td>
+            <td>{% for error in form.comment.errors %}{{ error }}{% endfor %}</td>
+        </tr>
+    </table>
+    </form>
+{% endblock %}

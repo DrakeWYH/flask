@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}服务器管理主页{% endblock %}
+{% block body %}
+    <h1>欢迎来到服务器管理主页</h1>
+    <ul>
+        {% if not user %}
+            <li><a href="{{ url_for('login') }}">用户登陆</a></li>
+            <li><a href="{{ url_for('regist') }}">用户注册</a></li>
+        {% else %}
+            <li><a href="{{ url_for('message') }}">服务器申请</a></li>
+            <li><a href="{{ url_for('logout') }}">用户注销</a></li>
+        {% endif %}
+    </ul>
+    {% if user %}
+    <table>
+        <thead>
+            <tr>
+                <td>用户名</td><td>占用核数</td><td>占用内存</td><td>开始时间</td><td>结束时间</td><td>备注</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+                <tr>
+                    <td>{{ message.author.username }}</td>
+                    <td>{{ message.kernel_use }}</td>
+                    <td>{{ message.memory_use }}M</td>
+                    <td>{{ message.time_begin }}</td>
+                    <td>{{ message.time_end }}</td>
+                    <td>{{ message.comment }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

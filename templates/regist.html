@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}注册界面{% endblock %}
+{% block body %}
+    <h1>用户注册</h1>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="username" value="{{ form.username.data|default('', boolean=True) }}"></td>
+                <td>{% for error in form.username.errors %}{{ error }}{% endfor %}</td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" name="password"></td>
+                <td>{% for error in form.password.errors %}{{ error }}{% endfor %}</td>
+            </tr>
+            <tr>
+                <td>重复密码：</td>
+                <td><input type="password" name="password_repeat"></td>
+                <td>{% for error in form.password_repeat.errors %}{{ error }}{% endfor %}</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="注册"> </td>
+                <td><a href="{{ url_for('index') }}"><input type="button" value="取消"></a> </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

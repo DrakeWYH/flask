@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}登陆界面{% endblock %}
+{% block body %}
+    <h1>用户登录</h1>
+    <form method='post' action="">
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="username" value="{{ form.username.data|default('', boolean=True) }}"/></td>
+                <td>{% for error in form.username.errors %}{{ error }}{% endfor %}</td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" name="password"></td>
+                <td>{% for error in form.password.errors %}{{ error }}{% endfor %}</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="登陆"> </td>
+                <td><a href="{{ url_for('index') }}"><input type="button" value="取消"></a> </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}
